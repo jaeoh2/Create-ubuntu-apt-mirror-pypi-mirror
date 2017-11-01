@@ -1,4 +1,4 @@
-# Create-ubuntu-apt-mirror-pypi-mirror
+# Create-ubuntu-apt-mirror-and-pypi-mirror
 How to create ubuntu 16.04 local apt-mirror and pypi-mirror server
 
 # apt-mirror
@@ -31,3 +31,41 @@ clean http://ports.ubuntu.com/ubuntu-ports
 ```
 sudo apt-mirror
 ```
+## Create symlinks for apache
+```
+sudo ln -s /apt-mirror/mirror/ports.ubuntu.com/ubuntu-ports/ /var/www/ubuntu
+```
+## Configure Apache2
+* /etc/apache2/ports.conf
+```
+Listen 8080
+```
+* /etc/apache2/sites-available/000-default.conf
+```
+<VirtualHost *:8080>
+  ServerAdmin admin@localhost
+  DocumentRoot  /var/www
+    <Directory /var/www/ubuntu>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+    </Directory>
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  LogLevel warn
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+```
+sudo chown www-data:www-data /var/www/ubuntu
+sudo service apache2 restart
+```
+
+## Configure Clients
+* /etc/apt/sources.list
+```
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-security main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-backports main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-proposed main restricted universe multiverse
+  
