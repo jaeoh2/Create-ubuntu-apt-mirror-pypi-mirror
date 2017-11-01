@@ -31,9 +31,38 @@ clean http://ports.ubuntu.com/ubuntu-ports
 ```
 sudo apt-mirror
 ```
+## Configure Clients
+* /etc/apt/sources.list
+```
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-security main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-backports main restricted universe multiverse
+deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-proposed main restricted universe multiverse
+```
+
+# Pypi mirror
+## Install pypi virtualenv
+```
+sudo apt-get update
+sudo apt-get install -y apache2 python-pip python3-pip
+sudo -H pip install -U virtualenv virtualenvwrapper
+sudo -H pip3 install -U virtualenv virtualenvwrapper
+```
+
+## Run Pypi mirror
+```
+vitualenv --no-site-packages pypi-mirror
+source pypi-mirror/bin/activate
+sudo -H pip install pep381client
+sudo mkdir pypi-mirror/data/
+pep381run pypi-mirror/data/
+```
+
 ## Create symlinks for apache
 ```
 sudo ln -s /apt-mirror/mirror/ports.ubuntu.com/ubuntu-ports/ /var/www/ubuntu
+sudo ln -s /pypi-mirror/data/web/ /var/www/pypi
 ```
 ## Configure Apache2
 * /etc/apache2/ports.conf
@@ -50,6 +79,13 @@ Listen 8080
     AllowOverride All
     Require all granted
     </Directory>
+    
+    <Directory /var/www/pypi>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+    </Directory>    
+    
   ErrorLog ${APACHE_LOG_DIR}/error.log
   LogLevel warn
   CustomLog ${APACHE_LOG_DIR}/access.log combined
@@ -57,15 +93,7 @@ Listen 8080
 ```
 ```
 sudo chown www-data:www-data /var/www/ubuntu
+sudo chown www-data:www-data /var/www/pypi
+
 sudo service apache2 restart
 ```
-
-## Configure Clients
-* /etc/apt/sources.list
-```
-deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial main restricted universe multiverse
-deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-security main restricted universe multiverse
-deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-updates main restricted universe multiverse
-deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-backports main restricted universe multiverse
-deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-proposed main restricted universe multiverse
-  
