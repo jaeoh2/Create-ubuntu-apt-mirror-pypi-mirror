@@ -2,12 +2,12 @@
 How to create ubuntu 16.04 local apt-mirror and pypi-mirror server
 
 # apt-mirror
-## Install apt-mirror package
+### Install apt-mirror package
 ```bash
 sudo apt-get update
 sudo apt-get install -y apache2 apt-mirror
 ```
-## Configure mirror lists
+### Configure mirror lists
 ```bash
 sudo mkdir -p /apt-mirror
 sudo vi /etc/apt/mirror.list
@@ -27,11 +27,11 @@ deb http://ports.ubuntu.com/ubuntu-ports xenial-backports main restricted univer
 
 clean http://ports.ubuntu.com/ubuntu-ports
 ```
-## Run apt-mirror
+### Run apt-mirror
 ```
 sudo apt-mirror
 ```
-## Configure Clients
+### Configure Clients
 * /etc/apt/sources.list
 ```
 deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial main restricted universe multiverse
@@ -42,7 +42,7 @@ deb http://IP_ADDRESS_OF_MIRROR_SERVER:8080/ubuntu/ xenial-proposed main restric
 ```
 
 # Pypi mirror
-## Install pypi virtualenv
+### Install pypi virtualenv
 ```
 sudo apt-get update
 sudo apt-get install -y apache2 python-pip python3-pip
@@ -50,7 +50,7 @@ sudo -H pip install -U virtualenv virtualenvwrapper
 sudo -H pip3 install -U virtualenv virtualenvwrapper
 ```
 
-## Run Pypi mirror
+### Run Pypi mirror
 ```
 vitualenv --no-site-packages pypi-mirror
 source pypi-mirror/bin/activate
@@ -59,12 +59,13 @@ sudo mkdir pypi-mirror/data/
 pep381run pypi-mirror/data/
 ```
 
-## Create symlinks for apache
+# Apache2
+### Create symlinks for apache
 ```
 sudo ln -s /apt-mirror/mirror/ports.ubuntu.com/ubuntu-ports/ /var/www/ubuntu
 sudo ln -s /pypi-mirror/data/web/ /var/www/pypi
 ```
-## Configure Apache2
+### Configure Apache2
 * /etc/apache2/ports.conf
 ```
 Listen 8080
