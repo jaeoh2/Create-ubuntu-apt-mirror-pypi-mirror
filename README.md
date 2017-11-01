@@ -59,6 +59,11 @@ sudo mkdir pypi-mirror/data/
 pep381run pypi-mirror/data/
 ```
 
+### Configure Clients
+```
+pip install --index-url=http://IP_ADDRESS_OF_MIRROR_SERVER:8080/pypi sompackage
+```
+
 # Apache2
 ### Create symlinks for apache
 ```
