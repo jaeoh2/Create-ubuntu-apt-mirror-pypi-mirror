@@ -18,6 +18,13 @@ set base_path /apt-mirror
 set nthreads 20
 set _tilde 0
 
+#amd64
+deb http://archive.ubuntu.com/ubuntu xenial main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu xenial-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu xenial-updates main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu xenial-proposed main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse
+
 #Arm64
 deb http://ports.ubunut.com/ubuntu-ports xenial main restricted universe multiverse
 deb http://ports.ubuntu.com/ubuntu-ports xenial-security main restricted universe multiverse
