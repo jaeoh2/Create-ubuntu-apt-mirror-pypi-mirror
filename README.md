@@ -52,12 +52,15 @@ sudo -H pip3 install -U virtualenv virtualenvwrapper
 
 ### Run Pypi mirror
 ```
-vitualenv --no-site-packages pypi-mirror
-source pypi-mirror/bin/activate
-sudo -H pip install pep381client
-sudo mkdir pypi-mirror/data/
-pep381run pypi-mirror/data/
+virtualenv --python=python3.5 pypi-mirror
+cd pypi-mirror
+bin/pip install -r https://bitbucket.org/pypa/bandersnatch/raw/stable/requirements.txt
 ```
+* Run bandersnatch mirror - it will create an empty configuration file for you in /etc/bandersnatch.conf.
+* Review /etc/bandersnatch.conf and adapt to your needs.
+* Run bandersnatch mirror again. It will populate your mirror with the current status of all PyPI packages - roughly 500GiB (2017-02-12). Expect this to grow substantially over time.
+* Run bandersnatch mirror regularly to update your mirror with any intermediate changes.
+
 
 ### Configure Clients
 ```
@@ -68,7 +71,7 @@ pip install --index-url=http://IP_ADDRESS_OF_MIRROR_SERVER:8080/pypi sompackage
 ### Create symlinks for apache
 ```
 sudo ln -s /apt-mirror/mirror/ports.ubuntu.com/ubuntu-ports/ /var/www/ubuntu
-sudo ln -s /pypi-mirror/data/web/ /var/www/pypi
+sudo ln -s /pypi-mirror/web/ /var/www/pypi
 ```
 ### Configure Apache2
 * /etc/apache2/ports.conf
