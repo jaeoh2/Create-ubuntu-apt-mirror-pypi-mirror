@@ -26,11 +26,11 @@ deb http://archive.ubuntu.com/ubuntu xenial-proposed main restricted universe mu
 deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse
 
 #Arm64
-deb http://ports.ubunut.com/ubuntu-ports xenial main restricted universe multiverse
-deb http://ports.ubuntu.com/ubuntu-ports xenial-security main restricted universe multiverse
-deb http://ports.ubuntu.com/ubuntu-ports xenial-updates main restricted universe multiverse
-deb http://ports.ubuntu.com/ubuntu-ports xenial-proposed main restricted universe multiverse
-deb http://ports.ubuntu.com/ubuntu-ports xenial-backports main restricted universe multiverse
+deb-arm64 http://ports.ubuntu.com/ubuntu-ports xenial main restricted universe multiverse
+deb-arm64 http://ports.ubuntu.com/ubuntu-ports xenial-security main restricted universe multiverse
+deb-arm64 http://ports.ubuntu.com/ubuntu-ports xenial-updates main restricted universe multiverse
+deb-arm64 http://ports.ubuntu.com/ubuntu-ports xenial-proposed main restricted universe multiverse
+deb-arm64 http://ports.ubuntu.com/ubuntu-ports xenial-backports main restricted universe multiverse
 
 clean http://ports.ubuntu.com/ubuntu-ports
 ```
